@@ -1,0 +1,72 @@
+html,
+body {
+    height: 100%;
+    background-color: #222831;
+}
+
+.body_login {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .checkbox {
+    font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.login {
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 550px;
+    padding: 15px;
+    background-color: #EEEEEE;
+}
+
+#form-registro {
+    width: 100%;
+    max-width: 700px;
+    padding: 15px;
+    margin: auto;
+}
+
+#div-registro {
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    padding: 15px;
+    background-color: #EEEEEE;
+}
+
+.form-select {
+    padding: 15px;
+}
+
+.btn {
+    margin: 5px;
+}
+
+.animacion {
+    display: none;
+}
+
+.animacion:nth-child(1) {
+    display: block;
+}
+
+.bg-purple {
+    background-color: #6f42c1;
+}
