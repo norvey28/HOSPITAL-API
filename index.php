@@ -81,21 +81,7 @@ include_once "modelo/class.php";
                 <form method="post" action="./controlador/registro_persona.php" id="formularioPaciente" class="formulariosRegistro">
                     <div class="row">
                         <label for="">Seleccione el tipo de cuenta a crear</label>
-                        <div class="col-8 mx-auto">
-                            <select class="form-select form-control" id="rolRegistro" name="rolRegistro" required>
-                                <option value="" selected>--Seleccione su Rol--</option>
-                                <?php
-                                $objDAO = new rolDAO();
-                                $roles = $objDAO->consultarTodos();
-                                foreach ($roles as $rol) {
-                                ?>
-                                    <option value="<?php echo $rol->getId(); ?>"><?php echo $rol->getNombre(); ?></option>
-                                <?php
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        <br><br><br>
+                        
 
 
 
@@ -112,9 +98,21 @@ include_once "modelo/class.php";
                                 <input type="number" class="form-control tel" id="registroTelefono" name="registroTelefono" placeholder="Telefono" required>
                                 <label for="registroTelefono">Telefono</label>
                             </div>
+                            <div>
+                                <select class="form-select form-control" name="registroDepartamentoNacimiento" id="registroDepartamentoNacimiento" required>
+                                    <option value="" selected>--Departamento de Nacimiento--</option>
+                                    <?php
+                                    $objDAO = new DepartamentoDAO();
+                                    $departamentos = $objDAO->consultarTodos();
+                                    foreach ($departamentos as $dep) {
+                                    ?>
+                                        <option value="<?php echo $dep->getId(); ?>"><?php echo $dep->getNombre() . "\n"; ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
 
-                            
-
+                            </div>
                             <div class="form-floating">
                                 <input type="number" class="form-control" id="registroNumeroSeguridad" name="registroNumeroSeguridad" placeholder="Numero seguridad social" required>
                                 <label for="registroNumeroSeguridad">Numero Seguridad Social</label>
