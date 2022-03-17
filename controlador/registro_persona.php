@@ -14,6 +14,11 @@ $numeroSeguridad = $_POST['registroNumeroSeguridad'];
 $codigoPostal = $_POST['registroCodigoPostal'];
 $idRol = $_POST['rolRegistro'];
 $password = $_POST['registroPassword'];
+$numColegiado;
+$idTipoMedico;
+$idTipoEmpleado;
+
+
 
 $objPersona = new Persona();
 
@@ -37,12 +42,17 @@ if ($objPersonaDAO->validar($id)) {
     switch ($idRol) {
         case 2: {
                 $objMedicoDAO = new MedicoDAO();
-                $objMedicoDAO->insertarIdPersona($id);
+                $numColegiado = $_POST['registroNumeroColegiado'];
+                $idTipoMedico = $_POST['registroTipoMedico'];
+                $objMedico = new Medico($id,$numColegiado,$idTipoMedico);
+                $objMedicoDAO->insertarDatos($objMedico);
                 break;
             }
         case 3: {
                 $objEmpleadoDAO = new EmpleadoDAO();
-                $objEmpleadoDAO->insertarIdPersona($id);
+                $idTipoEmpleado = $_POST['registroTipoEmpleado'];
+                $objEmpleado = new Empleado($id,$idTipoEmpleado);
+                $objEmpleadoDAO->insertarDatos($objEmpleado);
                 break;
             }
         case 4: {

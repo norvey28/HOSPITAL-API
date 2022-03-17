@@ -1,18 +1,22 @@
 $(document).ready(function() {
     $(document).on("click", "#cerrarSesion", function() {
-        $('.mensajes-ajax').html("<script>alert('Procesando, por favor espere...');</script>");
         $.ajax({
             url: "./controlador/cerrar_sesion.php",
             type: "POST",
             cache: false,
             success: function() {
-                $('.mensajes-ajax').html("<script>alert('Sesion finalizada correctmente');</script>");
-                $('.mensajes-ajax').html("<script>window.location.assign('./index.php');</script>");
+                $('.mensajes-ajax').html(alertaCorrecto("Sesion finalizada Correctamente", "./index.php"));
 
             },
             error: function() {
-                $('.mensajes-ajax').html("<script>alert('No se pudo cerrar sesion');</script>");
+                $('.mensajes-ajax').html(alertaCorrecto("Error al cerrar sesion", "./#"));
             }
         });
     });
+
 });
+
+function alertaCorrecto(texto, ruta) {
+    let mensaje = "<script type='text/javascript'> Swal.fire({ title: 'Éxito',text: '" + texto + " ',icon: 'success',allowOutsideClick: false,}).then((result) => {if (result.value) {window.location = '" + ruta + "' ;}}); </script>";
+    return mensaje;
+}

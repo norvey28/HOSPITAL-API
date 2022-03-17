@@ -1,5 +1,5 @@
 <?php
-include_once "modelo/class.php";
+require_once "modelo/class.php";
 ?>
 
 <!doctype html>
@@ -37,7 +37,7 @@ include_once "modelo/class.php";
 
                     <div>
 
-                        <select class="form-select form-control" name="idRolLogin" id="idRolLogin" required>
+                        <select class="form-select form-control select-index" name="idRolLogin" id="idRolLogin" required>
                             <option value="" selected>Seleccione su Rol</option>
                             <?php
                             $objDAO = new rolDAO();
@@ -59,7 +59,7 @@ include_once "modelo/class.php";
                     <div class="mb-3">
                         <br>
                         <label>¿No estás registrado?
-                            <button class="btn btn-link btn-sm alt-form" type="reset">Registrate</button>
+                            <button class="btn btn-link btn-sm alt-form" type="reset" onmouseup="inputs()" >Registrate</button>
                         </label>
 
                     </div>
@@ -81,7 +81,21 @@ include_once "modelo/class.php";
                 <form method="post" action="./controlador/registro_persona.php" id="formularioPaciente" class="formulariosRegistro">
                     <div class="row">
                         <label for="">Seleccione el tipo de cuenta a crear</label>
-                        
+                        <div class="col-8 mx-auto ">
+                            <select class="form-select form-control select-index" id="rolRegistro" name="rolRegistro" onchange='inputs()' required>
+                                <option value="" selected>--Seleccione su Rol--</option>
+                                <?php
+                                $objDAO = new rolDAO();
+                                $roles = $objDAO->consultarTodos();
+                                foreach ($roles as $rol) {
+                                ?>
+                                    <option value="<?php echo $rol->getId(); ?>"><?php echo $rol->getNombre(); ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <br><br><br>
 
 
 
@@ -94,19 +108,15 @@ include_once "modelo/class.php";
                                 <input type="text" class="form-control" id="registroApellidos" name="registroApellidos" placeholder="Apellidos" required>
                                 <label for="registroApellidos">Apellidos</label>
                             </div>
-                            <div class="form-floating">
-                                <input type="number" class="form-control tel" id="registroTelefono" name="registroTelefono" placeholder="Telefono" required>
-                                <label for="registroTelefono">Telefono</label>
-                            </div>
                             <div>
-                                <select class="form-select form-control" name="registroDepartamentoNacimiento" id="registroDepartamentoNacimiento" required>
+                                <select class="form-select form-control select-index" name="registroDepartamentoNacimiento" id="registroDepartamentoNacimiento" required>
                                     <option value="" selected>--Departamento de Nacimiento--</option>
                                     <?php
                                     $objDAO = new DepartamentoDAO();
                                     $departamentos = $objDAO->consultarTodos();
                                     foreach ($departamentos as $dep) {
                                     ?>
-                                        <option value="<?php echo $dep->getId(); ?>"><?php echo $dep->getNombre() . "\n"; ?></option>
+                                        <option value="<?php echo $dep->getId(); ?>"><?php echo $dep->getNombre(); ?></option>
                                     <?php
                                     }
                                     ?>
@@ -114,13 +124,19 @@ include_once "modelo/class.php";
 
                             </div>
                             <div class="form-floating">
-                                <input type="number" class="form-control" id="registroNumeroSeguridad" name="registroNumeroSeguridad" placeholder="Numero seguridad social" required>
-                                <label for="registroNumeroSeguridad">Numero Seguridad Social</label>
+                                <input type="number" class="form-control tel" id="registroTelefono" name="registroTelefono" placeholder="Telefono" required>
+                                <label for="registroTelefono">Telefono</label>
                             </div>
+
+
 
                             <div class="form-floating">
                                 <input type="password" class="form-control" id="registroPassword" name="registroPassword" placeholder="Contraseña" onkeyup="validarPassword()">
                                 <label for="registroPassword">Contraseña</label>
+                            </div>
+                            <div class="form-floating">
+                                <input type="password" class="form-control" id="registro_confirmoPassword" name="registro_confirmoPassword" placeholder=" Confirmar Contraseña" onkeyup="validarPassword()" required>
+                                <label for="registro_confirmoPassword">Confirmar Contraseña</label>
                             </div>
 
 
@@ -136,29 +152,16 @@ include_once "modelo/class.php";
                                 <input type="text" class="form-control" id="registroDireccion" name="registroDireccion" placeholder="Direccion" required>
                                 <label for="registroDireccion">Direccion</label>
                             </div>
+
                             <div>
-                                <select class="form-select form-control" id="rolRegistro" name="rolRegistro" required>
-                                    <option value="" selected>--Seleccione su Rol--</option>
-                                    <?php
-                                    $objDAO = new rolDAO();
-                                    $roles = $objDAO->consultarTodos();
-                                    foreach ($roles as $rol) {
-                                    ?>
-                                        <option value="<?php echo $rol->getId(); ?>"><?php echo $rol->getNombre(); ?></option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div>
-                                <select class="form-select form-control" name="registroDepartamentoResidencia" id="registroDepartamentoResidencia" required>
+                                <select class="form-select form-control select-index" name="registroDepartamentoResidencia" id="registroDepartamentoResidencia" required>
                                     <option value="" selected>--Departamento de Residencia--</option>
                                     <?php
                                     $objDAO = new DepartamentoDAO();
                                     $departamentos = $objDAO->consultarTodos();
                                     foreach ($departamentos as $dep) {
                                     ?>
-                                        <option value="<?php echo $dep->getId(); ?>"><?php echo $dep->getNombre() . "\n"; ?></option>
+                                        <option value="<?php echo $dep->getId(); ?>"><?php echo $dep->getNombre(); ?></option>
                                     <?php
                                     }
                                     ?>
@@ -169,9 +172,45 @@ include_once "modelo/class.php";
                                 <label for="registroCodigoPostal">Codigo postal</label>
                             </div>
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="registro_confirmoPassword" name="registro_confirmoPassword" placeholder=" Confirmar Contraseña" onkeyup="validarPassword()" required>
-                                <label for="registro_confirmoPassword">Confirmar Contraseña</label>
+                                <input type="number" class="form-control" id="registroNumeroSeguridad" name="registroNumeroSeguridad" placeholder="Numero seguridad social" required>
+                                <label for="registroNumeroSeguridad">Numero Seguridad Social</label>
                             </div>
+
+                            <div id="div-datos-medico" hidden>
+                                <div class="form-floating">
+                                    <input type="hidden" class="form-control" id="registroNumeroColegiado" name="registroNumeroColegiado" placeholder="Numero colegiado" required>
+                                    <label for="registroNumeroColegiado">Numero de colegiado</label>
+                                </div>
+                                <select class="form-select form-control select-index" name="registroTipoMedico" id="registroTipoMedico" required hidden disabled>
+                                    <option value="" selected>--Tipo de Medico--</option>
+                                    <?php
+                                    $objMedicoDAO = new MedicoDAO();
+                                    $tipos = $objMedicoDAO->consultarTiposMedicos();
+                                    foreach ($tipos as $t) {
+                                    ?>
+                                        <option value="<?php echo $t->getId(); ?>"><?php echo $t->getNombre(); ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+
+
+                            </div>
+                            <div id="div-datos-empleado" hidden>
+                                <select class="form-select form-control select-index" name="registroTipoEmpleado" id="registroTipoEmpleado" required hidden disabled>
+                                    <option value="" selected>--Tipo de Empleado--</option>
+                                    <?php
+                                    $objEmpleadoDAO = new EmpleadoDAO();
+                                    $tipos = $objEmpleadoDAO->consultarTiposEmpleados();
+                                    foreach ($tipos as $t) {
+                                    ?>
+                                        <option value="<?php echo $t->getId(); ?>"><?php echo $t->getNombre(); ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
 
 
                         </div>
@@ -186,7 +225,7 @@ include_once "modelo/class.php";
                     <div class="mb-3">
                         <br>
                         <label>¿Ya tienes una cuenta?
-                            <button class="btn btn-link btn-sm alt-form" type="reset">Inicia sesión</button>
+                            <button class="btn btn-link btn-sm alt-form" type="reset" >Inicia sesión</button>
                         </label>
                     </div>
                     <p class="mt-5 mb-3 text-muted">&copy; Norvey Peña - 2022</p>

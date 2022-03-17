@@ -51,7 +51,7 @@ body {
     background-color: #EEEEEE;
 }
 
-.form-select {
+.select-index {
     padding: 15px;
 }
 
@@ -69,4 +69,8 @@ body {
 
 .bg-purple {
     background-color: #6f42c1;
+}
+
+.div-oculto {
+    display: none;
 }

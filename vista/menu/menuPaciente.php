@@ -6,7 +6,7 @@
             </div>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 link-secondary link-dark">Pacientes</a></li>
+                <li><a href="#" class="nav-link px-2 link-secondary link-dark">Menu Paciente</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Medicos</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Empleados</a></li>
                 <li><a href="#" class="nav-link px-2 link-dark">Vacaciones</a></li>
@@ -18,7 +18,7 @@
                     <img src="./img/user.png" alt="user" width="32" height="32" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><label class="dropdown-item text-center"><?php echo $_SESSION['nombres']; ?></label></li>
                     <li>
 
                         <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalModificar">
