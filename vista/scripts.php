@@ -1,5 +1,4 @@
 <script src="./js/jquery-3.6.0.min.js"></script>
-<script src="./js/login.js"></script>
 <script src="./sweetAlert/dist/sweetalert2.all.min.js"></script>
 <script src="./js/functions.js"></script>
 

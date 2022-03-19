@@ -253,7 +253,7 @@ class PersonaDAO
 
     public function registrar($persona)
     {
-        
+
         $sql = "INSERT INTO persona VALUES (
             " . $persona->getId() . ",
             '" . $persona->getNombres() . "',
@@ -318,14 +318,14 @@ class PersonaDAO
             $this->objPersona->setCodigoPostal($r[7]);
             $this->objPersona->setNumSeguridadSocial($r[8]);
             $this->objPersona->setIdRol($r[9]);
-            array_push($this->personas,$this->objPersona);
+            array_push($this->personas, $this->objPersona);
         }
         return $this->personas;
     }
 
     public function actualizar($persona)
     {
-        
+
         $sql = "UPDATE persona SET 
             nombres = '" . $persona->getNombres() . "',
             apellidos = '" . $persona->getApellidos() . "',
@@ -335,10 +335,36 @@ class PersonaDAO
             departamentoResidencia = '" . $persona->getDepartamentoResidencia() . "',
             codigoPostal = '" . $persona->getCodigoPostal() . "',
             numSeguridadSocial = '" . $persona->getNumSeguridadSocial() . "'
-             WHERE id=".$persona->getId()."";
-             var_dump($sql);
+             WHERE id=" . $persona->getId() . "";
+        var_dump($sql);
         $resultado = mysqli_query($this->link, $sql)  or die(alertaError("Error al actualizar Persona ", mysqli_error($this->link)));
-        alertaCorrecto("Cambio Exitoso","../home.php");
+        alertaCorrecto("Cambio Exitoso", "../home.php");
+    }
+
+    public function validarDatos()
+    {
+
+        $sql = "SELECT * FROM persona WHERE id =
+            " . $this->objPersona->getId() . " AND
+            nombres = '".$this->objPersona->getNombres()."' AND
+            departamentoResidencia = ".$this->objPersona->getDepartamentoResidencia()."";
+        $resultado = mysqli_query($this->link, $sql)  or die(var_dump($sql)."\nError en consulta validarDatos ".mysqli_error($this->link));
+        if (mysqli_num_rows($resultado) != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getObjPersona()
+    {
+        return $this->objPersona;
+    }
+
+
+    public function setObjPersona($objPersona)
+    {
+        $this->objPersona = $objPersona;
     }
 }
 /** ---------------------------------------------------------------------------------------------------------------------------- */
@@ -504,14 +530,23 @@ class CredencialesDAO
         return $this->objCredenciales;
     }
 
+    public function nuevaPassword()
+    {
+        
+        $sql = "UPDATE credenciales SET password = 
+            '" . $this->objCredenciales->getPassword() . "' WHERE
+            idPersona = " . $this->objCredenciales->getIdPersona() . "";
+        mysqli_query($this->link, $sql)  or die(alertaError("Error al asignar nueva contraseña ", $this->link));
+    }
 
 
-    public function getCredenciales()
+
+    public function getObjCredenciales()
     {
         return $this->objCredenciales;
     }
 
-    public function setCredenciales($objCredenciales)
+    public function setObjCredenciales($objCredenciales)
     {
         $this->objCredenciales = $objCredenciales;
     }
@@ -835,10 +870,11 @@ function alertaError($mensaje = "", $error = "")
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <!-- CSS personalizado -->
-<link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/style.css">
         <!--SweetAlert2-->
         <link rel="stylesheet" href="../sweetAlert/dist/sweetalert2.min.css">
     </head>
+
     <body>
     </body>
     <script src="../js/jquery-3.6.0.min.js"></script>
@@ -857,7 +893,7 @@ function alertaError($mensaje = "", $error = "")
             <?php
             if ($error != "") {
             ?>
-                footer: "Mensaje para el desarrollador: <?php echo $error; ?>"
+                footer: "Mensaje para el desarrollador: <?php var_dump($error) ; ?>"
             <?php
             }
             ?>
@@ -885,10 +921,11 @@ function alertaCorrecto($mensaje = "", $ruta = "../index.php")
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <!-- CSS personalizado -->
-<link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/style.css">
         <!--SweetAlert2-->
         <link rel="stylesheet" href="../sweetAlert/dist/sweetalert2.min.css">
     </head>
+
     <body>
     </body>
     <script src="../js/jquery-3.6.0.min.js"></script>
@@ -910,23 +947,5 @@ function alertaCorrecto($mensaje = "", $ruta = "../index.php")
         });
     </script>
 <?php
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 ?>

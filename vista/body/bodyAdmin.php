@@ -17,7 +17,6 @@
                             <th scope="col">Num Seg Social</th>
                             <th scope="col">Tipo</th>
                             <th scope="col">Edit</th>
-
                         </tr>
                     </thead>
                     <tbody>
